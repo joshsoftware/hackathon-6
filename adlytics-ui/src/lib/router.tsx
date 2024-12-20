@@ -6,5 +6,11 @@ export const router = createBrowserRouter([
   {
     path: RoutePath.indexRoute,
     element: <LandingScreen />,
+    children: [
+      {
+        path: "",
+        element: <h1>Hello World</h1>,   // to import home component 
+      },
+    ],
   },
 ]);
