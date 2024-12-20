@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import { RoutePath } from "./route";
 import LandingScreen from "../screens/LandingScreen";
-import Home from "../components/Home";
+import Home from "../screens/Home";
+
 
 export const router = createBrowserRouter([
   {

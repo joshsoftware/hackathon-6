@@ -3,7 +3,7 @@ import logo from "../../assets/adlytics-neon-logo.jpg";
 
 const Navbar = () => {
   return (
-    <div className="bg-black text-white px-8 shadow-lg h-20 border-b-4 border-teal-500 drop-shadow-2xl">
+    <div className="fixed top-0 left-0 w-full bg-black text-white px-8 shadow-lg h-20 border-b-4 border-teal-500 drop-shadow-2xl z-50">
       <div className="flex justify-between items-center max-w-7xl mx-auto h-full">
         <div className="text-2xl font-bold text-teal-500 hover:text-teal-600 transition duration-300 cursor-pointer">
           <img src={logo} alt="Adlytics Logo" className="h-20 w-25" />
