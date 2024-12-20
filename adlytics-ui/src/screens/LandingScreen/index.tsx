@@ -46,9 +46,9 @@ const LandingScreen: React.FC = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10">
+    <div className="max-w-md mx-auto mt-10 flex flex-col items-center">
       <h1 className="text-xl font-semibold text-gray-800 mb-4">
-        CSV File Uploader
+        File Uploader
       </h1>
       <FileUploader onFileSelect={handleFileSelect} />
       <button
