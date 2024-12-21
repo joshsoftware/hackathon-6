@@ -5,6 +5,7 @@ import Home from "../screens/Home";
 import Dashboard from "../screens/Dashboard";
 import ForMe from "../screens/ForMe";
 import Profile from "../screens/Profile";
+import YourAds from "../screens/YourAds";
 
 export const router = createBrowserRouter([
   {
@@ -13,19 +14,24 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home />, 
+        element: <Home />,
       },
       {
         path: RoutePath.dashboardRoute,
         element: <Dashboard />,
       },
       {
+        // Update the route to include dynamic `adId` in the path
         path: RoutePath.forMeRoute,
-        element: <ForMe />,
+        element: <ForMe />, // ForMe component will receive `adId` as a URL param
       },
       {
         path: RoutePath.profileRoute,
         element: <Profile />,
+      },
+      {
+        path: RoutePath.yourAds,
+        element: <YourAds />,
       },
     ],
   },
