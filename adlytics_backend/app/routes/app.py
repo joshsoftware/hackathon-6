@@ -60,3 +60,25 @@ async def upload_file(file: UploadFile = File(...)):
     return JSONResponse(content={"error": str(e)}, status_code=500)
 
   return {"file_name": file.filename, "message": "File received successfully"}
+
+@app_router.get("/list-ads")
+async def list_ads():
+  try:
+    data = pd.read_excel('/home/josh-jin0141/josh/hackathon/hackathon-6/adlytics_backend/app/generated_output_file.xlsx')
+        
+    required_columns = ['AdID', 'AdName']
+        
+    ads_list = data[['AdID', 'AdName']].dropna().to_dict(orient='records')
+    return JSONResponse(content={"ads": ads_list}, status_code=200)
+    
+  except FileNotFoundError:
+    return JSONResponse(
+      content={"error": "The specified file was not found."},
+      status_code=404
+    )
+  except Exception as e:
+    return JSONResponse(
+      content={"error": str(e)},
+      status_code=500
+    )  
+      
