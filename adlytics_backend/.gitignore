@@ -1,0 +1,4 @@
+venv
+.env
+./app/uploaded_files/bq-results-20241220-131635-1734700613403.xlsx
+./app/generated_output_file.xlsx
