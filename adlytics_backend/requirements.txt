@@ -4,3 +4,6 @@ pandas
 numpy
 openpyxl
 xgboost
+joblib
+python-multipart
+python-dotenv
