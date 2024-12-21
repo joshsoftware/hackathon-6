@@ -29,7 +29,6 @@ ChartJS.register(
   RadialLinearScale
 );
 
-// Data generation utilities
 const generateRandomData = (
   min: number,
   max: number,
