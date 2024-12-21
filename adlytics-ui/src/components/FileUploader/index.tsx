@@ -19,14 +19,17 @@ const FileUploader: React.FC<CsvUploaderProps> = ({ onFileSelect }) => {
 
   const onDropRejected = (fileRejections: FileRejection[]) => {
     const errorMessage = fileRejections[0].errors[0].message;
-    setError(errorMessage);
+    console.log("Error while uploading file: ", errorMessage);
+    setError("Please upload a valid xlsx file.");
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     onDropRejected,
     accept: {
-      "text/csv": [".csv"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
     maxFiles: 1,
   });
@@ -48,7 +51,7 @@ const FileUploader: React.FC<CsvUploaderProps> = ({ onFileSelect }) => {
           <p className="text-blue-600 font-medium">Drop the CSV file here...</p>
         ) : (
           <p className="text-gray-600">
-            Drag and drop a CSV file here, or{" "}
+            Drag and drop a xlsx file here, or{" "}
             <span className="text-blue-500 font-medium">
               Click To Select One
             </span>
