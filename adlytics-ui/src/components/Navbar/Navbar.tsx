@@ -38,18 +38,18 @@ const Navbar = () => {
           >
             Your Ads
           </div>
-          <div
+          {/* <div
             onClick={() => handleNavigation(RoutePath.forMeRoute)}
             className="text-xl font-medium text-gray-300 hover:text-teal-500 hover:scale-105 transition duration-300 cursor-pointer"
           >
             For Me
-          </div>
-          <div
+          </div> */}
+          {/* <div
             onClick={() => handleNavigation(RoutePath.profileRoute)}
             className="text-xl font-medium text-gray-300 hover:text-teal-500 hover:scale-105 transition duration-300 cursor-pointer"
           >
             My Profile
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

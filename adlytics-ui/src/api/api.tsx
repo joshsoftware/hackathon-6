@@ -44,8 +44,11 @@ export const fileUploadApi = createApi({
     getAdAnalysis: builder.query<AdAnalysisResponse, { adId: number }>({
       query: ({ adId }) => `/analysis/ad/${adId}`,
     }),
+    dashboard : builder.query<any,void>({
+      query: () => "/analysis/dashboard",
+    })
   }),
 });
 
-export const { useUploadFileMutation, useGetListQuery, useGetAdAnalysisQuery } =
+export const { useUploadFileMutation, useGetListQuery, useGetAdAnalysisQuery , useDashboardQuery } =
   fileUploadApi;
