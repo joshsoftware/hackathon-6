@@ -101,6 +101,8 @@ async def dashboards():
 
     scatter_plot_data = (data[['Impressions', 'Clicks', 'Cost']].rename(columns={'Impressions': 'x', 'Clicks': 'y', 'Cost': 'z'}))
 
+    top_outbound = (data.groupby('AdID').agg({'OutboundClicks': 'sum'}).sort_values(by='OutboundClicks', ascending=False).head(10).reset_index().rename(columns={'AdID': 'AdID', 'OutboundClicks': 'OutboundClicks'}))
+
     # Convert to the required JSON format
     result_json = {
         "pieChart": {
@@ -113,7 +115,10 @@ async def dashboards():
             "data": line_chart_data.to_dict(orient='records')
         },
         "scatter plot": {
-          "data": scatter_plot_data.to_dict(orient='records')
+            "data": scatter_plot_data.to_dict(orient='records')
+        },
+        "topOutboundClicks": {
+            "data": top_outbound.to_dict(orient='records')
         }
     }
     
