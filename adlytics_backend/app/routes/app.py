@@ -7,7 +7,7 @@ import joblib
 import os
 import numpy as np
 import shutil
-
+from service.main import analyze_add
 from helper.utils import feature_engineering, get_crunched_data
 
 app_router = APIRouter(prefix="/analysis", tags=["Analysis Page"])
@@ -15,6 +15,20 @@ app_router = APIRouter(prefix="/analysis", tags=["Analysis Page"])
 @app_router.get("/")
 def getAnalysis():
   return {"message": "This is the analysis page!"}
+
+@app_router.get("/ad/{ad_id}")
+async def analyze_id(ad_id: int):
+    """
+    API endpoint to analyze or fetch data for a specific AD_ID.
+    
+    Args:
+        ad_id (int): The AD_ID to fetch the data for.
+    
+    Returns:
+        dict: The response containing the ad data or an error message.
+    """
+    result = analyze_add(ad_id)
+    return result
 
 @app_router.post("/upload-file")
 async def upload_file(file: UploadFile = File(...)):
@@ -26,7 +40,7 @@ async def upload_file(file: UploadFile = File(...)):
     with open(file_location, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    model_path = '/home/josh-jin0141/josh/hackathon/hackathon-6/adlytics_backend/app/models/ad_performance_model.pkl'
+    model_path = '/home/rushikesh/hackathon/hackathon-6/adlytics_backend/app/models/ad_performance_model.pkl'
 
     if not os.path.exists(model_path):
       raise FileNotFoundError(f"Model file not found: {model_path}")
@@ -59,4 +73,4 @@ async def upload_file(file: UploadFile = File(...)):
   except Exception as e:
     return JSONResponse(content={"error": str(e)}, status_code=500)
 
-  return {"file_name": file.filename, "message": "File received successfully"}
+  return {"file_name": file.filename, "message": "File received successfully!"}

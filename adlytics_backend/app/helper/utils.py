@@ -4,6 +4,8 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 import pandas as pd
 import numpy as np
+import json
+from service.prompt import PROMPT_MESSAGE
 
 def feature_engineering(data):
     """
@@ -175,3 +177,49 @@ def get_crunched_data(data):
     })
 
     return grouped_data
+
+def read_excel_as_list_of_dicts(file_path="/content/crunched_output_file.xlsx"):
+    """
+    Reads an Excel file and returns all rows as a list of dictionaries.
+    
+    Args:
+        file_path (str): Path to the Excel file.
+    
+    Returns:
+        dict: A response containing a message and the list of row dictionaries.
+    """
+    df = pd.read_excel(file_path)    
+    all_rows = df.to_dict(orient="records")
+
+    return {"data": all_rows}
+
+def read_excel_as_dict_by_ad_id(file_path=None, ad_id=None):
+    """
+    Reads an Excel file and returns the row corresponding to a specific AD_ID as a dictionary.
+    
+    Args:
+        file_path (str): Path to the Excel file.
+        ad_id: The ID of the ad to filter.
+    
+    Returns:
+        dict: A response containing the row for the specified AD_ID, or an error message if not found.
+    """
+    if file_path is None:
+        return {"error": "File path is required"}
+    
+    df = pd.read_excel(file_path)
+    
+    if ad_id is not None:
+        filtered_row = df[df["AdID"] == ad_id].to_dict(orient="records")
+        
+        if filtered_row:
+            return {"data": filtered_row[0]}
+        else:
+            return {"error": f"No data found for AD_ID: {ad_id}"}
+    return {"error": "AD_ID parameter is required"}
+
+
+def create_prompt(file_path, ad_id) -> str:
+    result = read_excel_as_dict_by_ad_id(file_path=file_path, ad_id=ad_id)
+    pretty_json = json.dumps(result, indent=4)
+    return PROMPT_MESSAGE.replace("<AD_DETAIL>", pretty_json)
