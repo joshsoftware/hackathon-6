@@ -65,6 +65,8 @@ async def upload_file(file: UploadFile = File(...)):
       3: 'Spend Less'
     }
     cleaned_data['Result'] = cleaned_data['Result'].map(label_mapping)
+    clean_data_path = 'clean_data.xlsx'
+    cleaned_data.to_excel(clean_data_path, index=False)
 
     crunched_data['Result'] = cleaned_data['Result']
     output_path = 'generated_output_file.xlsx'
@@ -85,6 +87,56 @@ async def list_ads():
     ads_list = data[['AdID', 'AdName']].dropna().to_dict(orient='records')
     return JSONResponse(content={"ads": ads_list}, status_code=200)
     
+  except FileNotFoundError:
+    return JSONResponse(
+      content={"error": "The specified file was not found."},
+      status_code=404
+    )
+  except Exception as e:
+    return JSONResponse(
+      content={"error": str(e)},
+      status_code=500
+    )  
+
+@app_router.get("/dashboard")
+async def dashboards():
+  try:
+    data = pd.read_excel('/home/josh-jin0141/josh/hackathon/hackathon-6/adlytics_backend/app/clean_data.xlsx')
+        
+    data = data[['AdID', 'AdName', 'CreativeObjectType', 'Cost', 'CTR', 'Clicks', 'Impressions', 'OutboundClicks']]
+    data['CreativeObjectType'] = data['CreativeObjectType'].fillna('Unknown')    
+
+    # Group by CREATIVE_OBJECT_TYPE and calculate counts
+    pie_chart_data = (data['CreativeObjectType'].value_counts().reset_index().rename(columns={'index': 'name', 'CreativeObjectType': 'value'}))
+
+    bar_chart_data = (data.groupby('CreativeObjectType')['Cost'].mean().reset_index().rename(columns={'CreativeObjectType': 'creative_object_type', 'Cost': 'average_cost'}))
+
+    line_chart_data = (data[['Cost', 'Clicks']].rename(columns={'Cost': 'Cost', 'Clicks': 'Clicks'}))
+
+    scatter_plot_data = (data[['Impressions', 'Clicks', 'Cost']].rename(columns={'Impressions': 'x', 'Clicks': 'y', 'Cost': 'z'}))
+
+    top_outbound = (data.groupby('AdID').agg({'OutboundClicks': 'sum'}).sort_values(by='OutboundClicks', ascending=False).head(10).reset_index().rename(columns={'AdID': 'AdID', 'OutboundClicks': 'OutboundClicks'}))
+
+    # Convert to the required JSON format
+    result_json = {
+        "pieChart": {
+            "data": pie_chart_data.to_dict(orient='records')
+        },
+        "barChart": {
+            "data": bar_chart_data.to_dict(orient='records')
+        },
+        "lineChart": {
+            "data": line_chart_data.to_dict(orient='records')
+        },
+        "scatter plot": {
+            "data": scatter_plot_data.to_dict(orient='records')
+        },
+        "topOutboundClicks": {
+            "data": top_outbound.to_dict(orient='records')
+        }
+    }
+    
+    return JSONResponse(content={"data": result_json}, status_code=200)
   except FileNotFoundError:
     return JSONResponse(
       content={"error": "The specified file was not found."},
