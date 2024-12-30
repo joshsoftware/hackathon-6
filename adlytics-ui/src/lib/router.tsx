@@ -3,8 +3,9 @@ import { RoutePath } from "./route";
 import LandingScreen from "../screens/LandingScreen";
 import Home from "../screens/Home";
 import Dashboard from "../screens/Dashboard";
-import ForMe from "../screens/ForMe";
+import AdSummary from "../screens/AdSummary";
 import Profile from "../screens/Profile";
+import YourAds from "../screens/YourAds";
 
 export const router = createBrowserRouter([
   {
@@ -13,19 +14,24 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home />, 
+        element: <Home />,
       },
       {
         path: RoutePath.dashboardRoute,
         element: <Dashboard />,
       },
       {
-        path: RoutePath.forMeRoute,
-        element: <ForMe />,
+
+        path: RoutePath.adSummary,
+        element: <AdSummary />,
       },
       {
         path: RoutePath.profileRoute,
         element: <Profile />,
+      },
+      {
+        path: RoutePath.yourAds,
+        element: <YourAds />,
       },
     ],
   },

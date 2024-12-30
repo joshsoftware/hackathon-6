@@ -12,8 +12,8 @@ const FileUploader: React.FC<CsvUploaderProps> = ({ onFileSelect }) => {
   const onDrop = (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (file) {
-      setSelectedFile(file); // Store the file in state
-      onFileSelect(file); // Pass file to parent component if you want immediate access
+      setSelectedFile(file);
+      onFileSelect(file);
     }
   };
 
@@ -35,37 +35,32 @@ const FileUploader: React.FC<CsvUploaderProps> = ({ onFileSelect }) => {
   });
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center space-y-4">
       <div
         {...getRootProps()}
-        className={`flex flex-col items-center justify-center w-full h-48 p-4 border-2 border-dashed rounded-lg
-        ${
-          isDragActive
-            ? "bg-blue-50 border-blue-500"
-            : "bg-gray-50 border-gray-300"
-        }
-        cursor-pointer hover:bg-gray-100 transition`}
+        className={`flex flex-col items-center justify-center w-full h-32 p-6 border-4 rounded-xl transition-all duration-300 ease-in-out cursor-pointer ${isDragActive
+          ? "bg-neon-green animate-neon-glow"
+          : "bg-neon-blue hover:bg-neon-light-blue"
+          }`}
       >
         <input {...getInputProps()} />
         {isDragActive ? (
-          <p className="text-blue-600 font-medium">Drop the CSV file here...</p>
+          <p className="text-neon-pink font-semibold text-lg">Drop the XLSX file here...</p>
         ) : (
-          <p className="text-gray-600">
+          <p className="text-neon-yellow font-medium text-md">
             Drag and drop a xlsx file here, or{" "}
-            <span className="text-blue-500 font-medium">
-              Click To Select One
-            </span>
+            <span className="text-blue-500 font-semibold">Click To Select One</span>
           </p>
         )}
       </div>
       {selectedFile && (
-        <div className="mt-2 text-gray-600">
-          <p>Selected File: {selectedFile.name}</p>
-          <p>Size: {Math.round(selectedFile.size / 1024)} KB</p>
+        <div className="mt-4 text-green-500">
+          <p className="font-medium">Selected File: <span className="font-semibold">{selectedFile.name}</span></p>
+          <p className="text-sm">Size: {Math.round(selectedFile.size / 1024)} KB</p>
         </div>
       )}
       {error && (
-        <p className="mt-2 text-red-500 font-medium text-sm">{error}</p>
+        <p className="mt-2 text-red-500 text-sm font-semibold">{error}</p>
       )}
     </div>
   );
