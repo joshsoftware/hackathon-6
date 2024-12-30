@@ -26,17 +26,18 @@ const Navbar = () => {
           >
             Home
           </div>
-          <div
-            onClick={() => handleNavigation(RoutePath.dashboardRoute)}
-            className="text-xl font-medium text-gray-300 hover:text-teal-500 hover:scale-105 transition duration-300 cursor-pointer"
-          >
-            Dashboard
-          </div>
+
           <div
             onClick={() => handleNavigation(RoutePath.yourAds)}
             className="text-xl font-medium text-gray-300 hover:text-teal-500 hover:scale-105 transition duration-300 cursor-pointer"
           >
             Your Ads
+          </div>
+          <div
+            onClick={() => handleNavigation(RoutePath.dashboardRoute)}
+            className="text-xl font-medium text-gray-300 hover:text-teal-500 hover:scale-105 transition duration-300 cursor-pointer"
+          >
+            Dashboard
           </div>
           {/* <div
             onClick={() => handleNavigation(RoutePath.forMeRoute)}

@@ -2,6 +2,6 @@ export const RoutePath = {
   indexRoute: "/",
   dashboardRoute: "/dashboard",
   profileRoute: "/profile",
-  forMeRoute: "/for-me/:adId", // Add dynamic adId parameter here
+  adSummary: "/ad-summary/:adId",
   yourAds: "/your-ads",
 };

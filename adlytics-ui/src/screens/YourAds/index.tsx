@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useGetListQuery } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 
-// Define the type for each ad item
 interface Ad {
   AdID: number;
   AdName: string;
@@ -12,25 +11,24 @@ const ITEMS_PER_PAGE = 50;
 
 const YourAds = () => {
   const { data, error, isLoading } = useGetListQuery();
-  const navigate = useNavigate(); // To navigate to the ForMe component
+  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  if (isLoading) return <p className="text-center text-gray-500">Loading...</p>;
+  if (isLoading) return <div className="text-center text-gray-500">Loading ads...</div>;
   if (error)
-    return <p className="text-center text-red-500">Error loading items</p>;
+    return <div className="text-center text-red-500">Oops! Something went wrong while loading the ads.</div>;
 
   const ads = data?.ads;
 
   if (!ads) {
     return (
-      <p className="text-center text-gray-500">
+      <div className="text-center text-gray-500">
         No ads found or API response is in an unexpected format.
-      </p>
+      </div>
     );
   }
 
-  // Calculate the range of ads to display on the current page
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const paginatedAds = ads.slice(startIndex, endIndex);
@@ -51,38 +49,29 @@ const YourAds = () => {
     return `${rangeStart} to ${rangeEnd}`;
   };
 
-  // Navigate to ForMe component on click
   const handleAdClick = (adId: number) => {
-    navigate(`/for-me/${adId}`); // Navigate with the AdID in the URL
+    navigate(`/ad-summary/${adId}`);
   };
 
   return (
     <div className="p-6 bg-white shadow-md rounded-lg">
       <h1 className="text-3xl font-semibold text-gray-800 mb-6">Your Ads</h1>
-      <table className="min-w-full table-auto bg-white border-separate border-spacing-2 border border-gray-300 rounded-lg shadow-md">
+      <table className="min-w-full table-auto bg-white border-collapse border border-gray-300 rounded-lg shadow-md">
         <thead>
           <tr>
-            <th className="px-6 py-3 bg-indigo-600 text-white text-left rounded-tl-lg">
-              Ad ID
-            </th>
-            <th className="px-6 py-3 bg-indigo-600 text-white text-left rounded-tr-lg">
-              Ad Name
-            </th>
+            <th className="px-6 py-4 bg-indigo-600 text-white text-left rounded-tl-lg text-xl">Ad ID</th>
+            <th className="px-6 py-4 bg-indigo-600 text-white text-left rounded-tr-lg text-xl">Ad Name</th>
           </tr>
         </thead>
         <tbody>
           {paginatedAds.map((item: Ad) => (
             <tr
               key={item.AdID}
-              className="hover:bg-gray-50 transition duration-200 cursor-pointer"
-              onClick={() => handleAdClick(item.AdID)} // On click, navigate
+              className="bg-gray-900 text-gray-300 transition duration-300 cursor-pointer hover:bg-gradient-to-r hover:from-gray-500 hover:to-green-300 hover:text-white hover:shadow-xl hover:ring-2 hover:ring-indigo-300"
+              onClick={() => handleAdClick(item.AdID)}
             >
-              <td className="px-6 py-4 border-b border-gray-200 text-gray-700">
-                {item.AdID}
-              </td>
-              <td className="px-6 py-4 border-b border-gray-200 text-gray-700">
-                {item.AdName}
-              </td>
+              <td className="px-6 py-4 border-b border-gray-700 text-lg">{item.AdID}</td>
+              <td className="px-6 py-4 border-b border-gray-700 text-lg">{item.AdName}</td>
             </tr>
           ))}
         </tbody>

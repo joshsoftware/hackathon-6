@@ -171,13 +171,13 @@ const HomePage = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [testimonials, setTestimonials] = useState(generateTestimonials());
 
-  // Update data periodically
+
   useEffect(() => {
     const interval = setInterval(() => {
       setTimePerformance(generateTimePerformance());
       setMetrics(generateMetrics());
       setAdPlacements(generateAdPlacements());
-    }, 5000); // Update every 5 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -310,36 +310,51 @@ const HomePage = () => {
             </div>
           </div>
         </header>
-        {/* <div className="max-w-md mx-auto mt-10 flex flex-col items-center">
+
+        <div className="max-w-md mx-auto mt-10 flex flex-col items-center space-y-6 px-4 py-6 bg-gray-800 rounded-lg shadow-lg">
           <h1 className="text-xl font-semibold text-white-800 mb-4">
-            File Uploader
+            Upload your file here
           </h1>
           <FileUploader onFileSelect={handleFileSelect} />
           <button
             onClick={handleUpload}
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
-          >
-            Upload File
-          </button>
-          {error && <p className="text-red-500 mt-2">{error}</p>}
-        </div> */}
-        <div className="max-w-md mx-auto mt-10 flex flex-col items-center">
-          <h1 className="text-xl font-semibold text-gray-800 mb-4">
-            File Uploader
-          </h1>
-          <FileUploader onFileSelect={handleFileSelect} />
-          <button
-            onClick={handleUpload}
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+            className="mt-4 px-6 py-3 bg-green-400 text-white rounded-md shadow-md hover:bg-green-500 transition-all ease-in-out duration-300"
             disabled={isLoading}
           >
-            {isLoading ? "Uploading..." : "Upload File"}
+            {isLoading ? (
+              <div className="flex items-center">
+                <svg
+                  className="animate-spin h-5 w-5 mr-2 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    fill="none"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 0116 0"
+                  />
+                </svg>
+                Uploading...
+              </div>
+            ) : (
+              "Upload File"
+            )}
           </button>
           {error && <p className="text-red-500 mt-2">{error}</p>}
           {isError && (
             <p className="text-red-500 mt-2">Error: "File Upload Failed"</p>
           )}
         </div>
+
 
         <section className="py-8 px-4">
           <div className="max-w-7xl mx-auto">
@@ -358,11 +373,10 @@ const HomePage = () => {
                       {metric.value}
                     </span>
                     <span
-                      className={`ml-2 text-sm ${
-                        metric.change.startsWith("+")
-                          ? "text-green-400"
-                          : "text-red-400"
-                      }`}
+                      className={`ml-2 text-sm ${metric.change.startsWith("+")
+                        ? "text-green-400"
+                        : "text-red-400"
+                        }`}
                     >
                       {metric.change}
                     </span>
@@ -407,11 +421,10 @@ const HomePage = () => {
                 <button
                   key={timeframe}
                   onClick={() => setSelectedTimeframe(timeframe)}
-                  className={`px-4 py-2 rounded ${
-                    selectedTimeframe === timeframe
-                      ? "bg-green-400 text-black"
-                      : "bg-gray-800 text-white"
-                  }`}
+                  className={`px-4 py-2 rounded ${selectedTimeframe === timeframe
+                    ? "bg-green-400 text-black"
+                    : "bg-gray-800 text-white"
+                    }`}
                 >
                   {timeframe.charAt(0).toUpperCase() + timeframe.slice(1)}
                 </button>
