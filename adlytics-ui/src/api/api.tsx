@@ -1,5 +1,26 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+// Define the type for each ad item
+interface Ad {
+  AdID: number;
+  AdName: string;
+}
+
+interface GetAdsResponse {
+  ads: Ad[];
+}
+
+interface AdAnalysisResponse {
+  analysis: {
+    ad_id: number;
+    ad_name: string;
+    result: string;
+    reasons: string[];
+    insights: string[];
+    suggestions: string[];
+  };
+}
+
 export const fileUploadApi = createApi({
   reducerPath: "fileUploadApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000" }),
@@ -17,7 +38,17 @@ export const fileUploadApi = createApi({
         };
       },
     }),
+    getList: builder.query<GetAdsResponse, void>({
+      query: () => "/analysis/list-ads",
+    }),
+    getAdAnalysis: builder.query<AdAnalysisResponse, { adId: number }>({
+      query: ({ adId }) => `/analysis/ad/${adId}`,
+    }),
+    dashboard : builder.query<any,void>({
+      query: () => "/analysis/dashboard",
+    })
   }),
 });
 
-export const { useUploadFileMutation } = fileUploadApi;
+export const { useUploadFileMutation, useGetListQuery, useGetAdAnalysisQuery , useDashboardQuery } =
+  fileUploadApi;
