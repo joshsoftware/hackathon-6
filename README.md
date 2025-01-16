@@ -118,3 +118,8 @@ npm run build
 3. Commit changes
 4. Push to the branch
 5. Open a Pull Request
+
+
+### Documentation
+1. [https://docs.google.com/document/d/18Vvc4LjEhz0c5iM7oaAomJ8D4RVzFRGo0ZSnXS0gvAE/edit?usp=sharing](https://docs.google.com/document/d/18Vvc4LjEhz0c5iM7oaAomJ8D4RVzFRGo0ZSnXS0gvAE/edit?usp=sharing)
+2. [https://docs.google.com/document/d/1cI0C_bWUfEdQm51uhRjp-j1eoEp6T0iQHZlyCQ6dMuI/edit?usp=sharing](https://docs.google.com/document/d/1cI0C_bWUfEdQm51uhRjp-j1eoEp6T0iQHZlyCQ6dMuI/edit?usp=sharing)
