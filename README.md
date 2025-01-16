@@ -1,4 +1,68 @@
-# Adlytics React App
+# Adlytics Ninjas : Project Setup Instructions
+
+Follow these steps to set up the project locally.
+
+# Backend Setup 🚀
+
+### Step 1: Install Python
+
+Ensure that you have Python 3.8+ installed on your system.
+
+To verify the installation, run:
+
+```bash
+python --version
+```
+
+If Python is not installed, you can download it from python.org.
+
+### Step 2: Clone the repository
+Clone the Repository
+Clone the project repository by running:
+```bash
+git clone https://github.com/joshsoftware/hackathon-6.git
+```
+
+### Step 3: Move to Project Directory
+Navigate to the project directory:
+```bash
+cd adlytics_backend
+```
+
+### Step 4: Create a Virtual Environment
+To create a virtual environment, run:
+```bash
+python -m venv venv
+```
+or, if you are using Python 3:
+```bash
+python3 -m venv venv
+```
+
+### Step 5: Activate the Virtual Environment
+
+For macOS/Linux:
+```bash
+source venv/bin/activate
+```
+For Windows:
+```bash
+.\venv\Scripts\activate
+```
+
+### Step 6: Install Dependencies 🛠️
+Install the required dependencies by running:
+```bash
+pip install -r ../requirements.txt
+```
+
+### Step 7: Run the Backend
+To run the backend, use the following command:
+```bash
+uvicorn main:app --reload
+```
+
+# Frontend Setup
 
 ### 🚀 Quick start
 
